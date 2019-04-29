@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+
+
+</head>
+  <body>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+      <a class="navbar-brand" href="{{url_for('home')}}">AI Sangam</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('home')}}">Our Company</a>
+          </li>
+
+      {% if current_user.is_authenticated %}
+      
+      <li class="nav-item">
+            <a class="nav-link" href="{{url_for('frequency')}}">Calculate frequency</a>
+          </li>
+
+      
+      <li class="nav-item">
+            <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
+          </li>    
+
+      {% else %}
+       
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('register')}}">Register Here</a>
+          </li>
+         
+         <li class="nav-item">
+            <a class="nav-link" href="{{url_for('login')}}">Login here</a>
+          </li> 
+        {% endif %}
+
+     
+          </ul>
+      </div>
+    </nav>
+
+    {% block content %}
+
+    {% endblock %}
+  </body>
+  
+   
