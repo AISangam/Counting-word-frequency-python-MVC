@@ -1,7 +1,7 @@
 from app import *
 from app.settings import *
 from flask import Flask, render_template, url_for, request, flash, redirect
-from app.models import User
+from app.models import User, details
 from app.code_functions import frequency_occurence
 import traceback
 import json
@@ -67,13 +67,22 @@ def login_view():
 # @login_required
 def nlp_freq_occurence():
 	
-    if request.method == "POST":
-    	TEXT = request.form.get('Text1')
-    	output = frequency_occurence(TEXT)  
-    	# print("++++++", output)
-    	return json.dumps(output)
+	if request.method == "POST":
+		TEXT = request.form.get('Text1')
+    	
+		output = frequency_occurence(TEXT)
 
-    return render_template ('text.html')	
+		Details = details(user_id=current_user.id,
+					frequency_count=str(output))  
+
+		db.session.add(Details)
+		db.session.commit()
+
+
+    	# print("++++++", output)
+		return json.dumps(output)
+
+	return render_template ('text.html')	
 
 
 
