@@ -6,7 +6,7 @@ from sqlalchemy import ForeignKey
 from datetime import datetime
 
 class User(db.Model):
-
+        # name of table
 	__tablename__ = 'user_details'
 	
 	id = db.Column(db.BigInteger, primary_key=True)
@@ -39,21 +39,21 @@ class User(db.Model):
 		return self.id
 
 class details(db.Model):
-
+        # name of table  
 	__tablename__ = 'users_insights'
 
 	id = db.Column(
         db.BigInteger,
         primary_key=True)
-
+        
+	# foreign key is used to set the relationship. Primary key of one table is 
+	# used as the foreign key of another table.
 	user_id = db.Column(
 		db.BigInteger,
 		ForeignKey('user_details.id')
 	)
-
-	frequency_count = db.Column(
-						db.Text, 
-						unique=True)
+        # since we can have large output returned, hence datatype is Text.
+	frequency_count = db.Column(db.Text,unique=True)
     
 	def __init__(self, user_id, frequency_count):
 		self.user_id = user_id
