@@ -109,6 +109,30 @@ Once the user  are login with the right credentials, they can play with the app 
 
 ![screenshot4](https://user-images.githubusercontent.com/35392729/56883013-0776d880-6a83-11e9-83c2-e81f1b2c07ac.png)
 
+### Relational Database is implemented  
+
+![relational_database](https://user-images.githubusercontent.com/35392729/57037857-f7731a80-6c75-11e9-9475-87e4ae37c025.png) 
+
+If you see carefully user_id in this table comes from another table with the help of foreign key. Primary key of the first table is used as foreign key of the second table.This will help us to locate the activities of the person using the unique id. Please see the below code to know about this concept in both models.py as well as views.py.  
+
+```
+# in models.py
+user_id = db.Column(
+		db.BigInteger,
+		ForeignKey('user_details.id')
+	)
+	
+```
+
+```
+# in views.py file
+Details = details(user_id=current_user.id,
+					frequency_count=str(output))  
+
+		db.session.add(Details)
+		db.session.commit()
+```
+
 
   
 
