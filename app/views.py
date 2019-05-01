@@ -25,7 +25,7 @@ def home_page():
 
 
 def register_view():
-	
+	# this code is implemented when the request coming from frontend is POST
 	if request.method == 'POST':
 		Username = request.form.get('uname')
 		Password = request.form.get('psw')
@@ -36,7 +36,7 @@ def register_view():
 			password=Password,
 			email=Email
 		)
-
+                # Adding the user in the session
 		db.session.add(user)
 		db.session.commit()
 		return render_template('register.html')
@@ -79,7 +79,7 @@ def nlp_freq_occurence():
 		db.session.commit()
 
 
-    	# print("++++++", output)
+    	
 		return json.dumps(output)
 
 	return render_template ('text.html')	
@@ -88,7 +88,7 @@ def nlp_freq_occurence():
 
 def logout_view():
 	logout_user()
-	return redirect('/	')	
+	return redirect('/')	
 	
 
                     
