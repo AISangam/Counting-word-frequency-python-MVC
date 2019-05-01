@@ -132,7 +132,36 @@ Details = details(user_id=current_user.id,
 		db.session.add(Details)
 		db.session.commit()
 ```
+### Dockerfile  
 
+![docker_facebook_share](https://user-images.githubusercontent.com/35392729/57041002-baf7ec80-6c7e-11e9-8df5-7863d67841e9.png)  
+
+Dockerfile will create the image. This will contain all the dependencies which is needed to run the code. I will make the docker-compose.yml file where image build using docker command docker build -t **name of image** . is used as well as another image for the database will be used. Please have a look at the docker file as below.  
+
+```
+FROM ubuntu:16.04
+RUN apt-get update: 
+RUN apt-get install -y python3-pip python3-dev build-essential
+WORKDIR /freq_count
+COPY . /freq_count
+RUN pip3 install -r requirements.txt
+```
+
+<b>Let us understand the Dockerfile as below:</b>
+<ol>
+	<li> FROM ubuntu:16.04: This will pull the base image </li>
+	<li> RUN apt-get update: This will run the command in an container. Remember when the image is created, it is run in an container.</li>
+	<li> RUN apt-get install -y python3-pip python3-dev build-essential: This command will install pip3 inside the docker image which we will build</li>
+	<li> WORKDIR /freq_count : Create the directory as freq_count inside the docker image.</li>
+	<li>  . /freq_count: It will ADD all the files and folders which is present in the folder where Dockerfile is present (<b>your system</b>) to the above working directory in the docker image.</li>
+	<li> RUN pip3 install -r requirements.txt: This will run requirements.txt inside the new container.</li></ol>
+		
+<b> How to build the docker image</b>
+Please execute the below command
+
+```
+docker build -t **name of image which you want to give** .
+```
 
   
 
