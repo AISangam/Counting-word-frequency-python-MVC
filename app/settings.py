@@ -14,7 +14,7 @@ app = Flask(
 	static_folder = static_dir)
 
 app.config["SECRET_KEY"] = "this_is_secret"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123@localhost/frequency_occurence'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123@db:3306/frequency_occurence'
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
