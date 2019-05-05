@@ -90,7 +90,7 @@ def frequency_occurence(text):
 
 <li><b><em>Salient Features of this code</b></em>: There are two views which are shown to user.
 	<ul>
-		<li> View 1: In this view, user who are not registered can see the following details. These are the general details and they cannot see the app which I have developed which is to count the frequency of the cleaned words in the text. For better visualization please see the below screenshot</li>  </ul> 
+		<li>docker login --username=docker_hub_username View 1: In this view, user who are not registered can see the following details. These are the general details and they cannot see the app which I have developed which is to count the frequency of the cleaned words in the text. For better visualization please see the below screenshot</li>  </ul> 
 	
 		
 		![screenshot_1](https://user-images.githubusercontent.com/35392729/56882652-dba72300-6a81-11e9-9b4d-cdee42e9e028.png)  
@@ -163,7 +163,79 @@ Please execute the below command
 docker build -t **name of image which you want to give** .
 ```
 
-  
+## Pushing the image to docker-hub  
+
+Once the image is build, it is important to push the image to the docker-hub. Please follow the below step to push the image to the docker-hub.
+<ul>
+	<li> Create an account to docker-hub. Please use this link for this step https://hub.docker.com</li>
+	<li> Now please open the terminal and type the below command</li></ul>
+	
+	
+	docker login --username=docker_hub_username
+	# it will ask for password. Please fill it
+	
+<ul>	
+   <li> Now check the id of the image which one needs to pushed to the docker-hub. You can check this using command
+	   docker images. Now please type this command in the terminal. This command is used to </li> </ul>
+	  
+	   
+	   # demo
+	   docker tag **image_id** **docker-hub/repository_name:commit**
+	   # actual command
+	   docker tag 779bd7389cca aisangam/count_words_flask:first_commit
+	   
+<ul>
+	<li> Now please it is the time to push the image to the docker-hub. Please insert the below command to perform this action.</li></ul>
+	
+	# demo command
+	docker push **docker-hub/repository_name:commit**
+	# actual command
+	docker push aisangam/count_words_flask:first_commit
+	
+## Creating the docker-compose file for this project   
+
+![docker-compose](https://user-images.githubusercontent.com/35392729/57193804-f8999580-6f5c-11e9-8a2c-adfdf5578af9.jpg)
 
 
-  
+Once the image is created and pushed to the docker-hub. It is the time to create the docker-compose.yml. IT will make to run the services that is image, database and any other services using the single command. One only need this command to run the overall project. Does it not make the sense. First of all one need to install docker-compose. To install it, please follow the below command.
+
+```
+sudo apt install docker-compose
+```
+Let us see the docker-compose.yml file for this project as below
+
+```
+version: '2'
+services:
+
+    db:
+      image: mysql
+      restart: always
+      environment:
+        MYSQL_ROOT_PASSWORD: 123
+        MYSQL_DATABASE: frequency_occurence
+      networks:
+        - main
+
+    web:
+      restart: always
+      image: aisangam/count_words_flask:first_commit
+      command:  python3 manage.py
+      ports:
+        - "2226:5000"
+      links:
+        - db
+      depends_on:
+        - db
+      networks:
+        - main
+
+networks:
+  main:
+    driver: bridge
+
+volumes:
+  scan_file:
+```
+
+If one can see carefully, I have mentioned the name of the database as well as password in this file. You can see the same password as well as database name in the settings.py (while coding). Image which has been uploaded to the docker hub has been used here. Network has been mentioned in the both the services web as well as db and is connected with the help of bridge. 
