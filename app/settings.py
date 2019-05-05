@@ -1,7 +1,6 @@
 import os
 from flask import Flask, redirect
 from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, \
 	logout_user, current_user
 
@@ -17,6 +16,5 @@ app.config["SECRET_KEY"] = "this_is_secret"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123@db:3306/frequency_occurence'
 
 db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
 login_manager = LoginManager()
 login_manager.init_app(app)	
